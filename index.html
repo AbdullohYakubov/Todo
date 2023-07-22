@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array, for loop</title>
+    <link rel="stylesheet" href="./css/main.min.css">
+</head>
+
+<body>
+    <main class="container">
+        <section class="todo">
+            <form class="todo__form" autocomplete="off">
+                <label for="todos" class="todo__label">todos</label>
+                <input class="todo__input" type="text" id="todos" placeholder="What needs to be done?">
+            </form>
+
+            <ul class="todo__list"></ul>
+        </section>
+    </main>
+
+    <template class="todo__item--template">
+        <li class="todo__item">
+            <div class="todo__item--wrapper">
+                <div class="checkbox__wrapper">
+                    <div class="round">
+                        <input type="checkbox" id="checkbox" onclick="crossOutCompletedTaks()" />
+                        <label for="checkbox"></label>
+                    </div>
+                </div>
+
+                <h1 class=" todo__item--text"></h1>
+
+                <button class="todo__item--btn" onclick="removeTasks()">
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                        viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+                        <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#CC9A9A"
+                            stroke="none">
+                            <path d="M575 4540 l-250 -250 865 -865 865 -865 -865 -865 -865 -865 253
+-252 252 -253 865 865 865 865 865 -865 865 -865 252 253 253 252 -865 865
+-865 865 865 865 865 865 -253 252 -252 253 -865 -865 -865 -865 -863 863
+c-474 474 -864 862 -867 862 -3 0 -118 -113 -255 -250z" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </li>
+    </template>
+
+    <script src="./js/main.js"></script>
+</body>
+
+</html>

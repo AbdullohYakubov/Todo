@@ -1,0 +1,26 @@
+@charset "UFT-8";
+
+*,
+*::after,
+*::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    font-weight: 500;
+    color: #4D4D4D;
+}
+
+body {
+    background-color: #F3F3F3;
+}
+
+.container {
+    max-width: 1160px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+@import "./todo";
+@import "./checkbox";
