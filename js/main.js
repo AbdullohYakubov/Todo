@@ -2,6 +2,10 @@ const elTodoForm = getElement(".todo__form");
 const elTodoInput = getElement(".todo__input", elTodoForm);
 const elTodoList = getElement(".todo__list");
 const elTodoTemplate = getElement("#todo__item--template").content;
+const elTodoCounter = getElement(".todo__result--wrapper");
+const elTodoAll = getElement(".todo__all-text", elTodoCounter);
+const elTodoActive = getElement(".todo__active-text", elTodoCounter);
+const elTodoCompleted = getElement(".todo__completed-text", elTodoCounter);
 
 const todoArr = [];
 
@@ -40,6 +44,10 @@ const handleTodoForm = (evt) => {
 
   const todoInputValue = elTodoInput.value.trim();
 
+  if (!todoInputValue) {
+    return;
+  }
+
   const newTodo = {
     id: todoArr[todoArr.length - 1]?.id + 1 || 0,
     title: todoInputValue,
@@ -50,6 +58,9 @@ const handleTodoForm = (evt) => {
 
   renderTodos(todoArr, elTodoList);
 
+  //   getElement(".todo__all").textContent = todoArr.length;
+  //   getElement(".todo__active").textContent = todoArr.length;
+
   elTodoInput.value = null;
 };
 
@@ -59,12 +70,18 @@ const handleDeleteTodo = (id, array) => {
   const foundTodoIndex = array.findIndex((todo) => todo.id === id);
 
   array.splice(foundTodoIndex, 1);
+
+  renderTodos(todoArr, elTodoList);
+
+  //   getElement(".todo__all").textContent = todoArr.length;
 };
 
 const handleCheckTodo = (id, array) => {
   const foundTodo = array.find((todo) => todo.id === id);
 
   foundTodo.isCompleted = !foundTodo.isCompleted;
+
+  renderTodos(todoArr, elTodoList);
 };
 
 const handleTodoList = (evt) => {
@@ -72,17 +89,31 @@ const handleTodoList = (evt) => {
     const clickedTodoId = Number(evt.target.dataset.todoId);
 
     handleDeleteTodo(clickedTodoId, todoArr);
-
-    renderTodos(todoArr, elTodoList);
   }
 
   if (evt.target.matches("#checkbox")) {
     const checkedTodoId = Number(evt.target.dataset.todoId);
 
     handleCheckTodo(checkedTodoId, todoArr);
-
-    renderTodos(todoArr, elTodoList);
   }
 };
 
 elTodoList.addEventListener("click", handleTodoList);
+
+const handleTodoCounter = (evt) => {
+  if (evt.target.matches(".todo__all")) {
+    renderTodos(todoArr, elTodoList);
+  }
+
+  if (evt.target.matches(".todo__completed")) {
+    const completedTodos = todoArr.filter((todo) => todo.isCompleted);
+    renderTodos(completedTodos, elTodoList);
+  }
+
+  if (evt.target.matches(".todo__active")) {
+    const activeTodos = todoArr.filter((todo) => !todo.isCompleted);
+    renderTodos(activeTodos, elTodoList);
+  }
+};
+
+elTodoCounter.addEventListener("click", handleTodoCounter);

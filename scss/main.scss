@@ -17,9 +17,14 @@ body {
 }
 
 .container {
-    max-width: 1160px;
+    max-width: 75%;
     margin: auto;
-    padding: 0 20px;
+}
+
+.current {
+    box-shadow: 0 0 0 1px #EFD5D5;
+    padding: 7px;
+    border-radius: 5px
 }
 
 @import "./todo";

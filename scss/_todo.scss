@@ -1,12 +1,18 @@
 .todo {
-    margin: 20px 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.todo__form {
+.todo__wrapper {
     width: 50%;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+}
+
+.todo__form {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,9 +29,11 @@
     width: 100%;
     height: 75px;
     padding: 5px 50px;
+    word-break: break-all;
     border: none;
     outline: none;
     box-shadow: 0 3px 10px #BCBCBC;
+    box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
 }
 
 .todo__input::placeholder {
@@ -35,25 +43,18 @@
     user-select: none;
 }
 
-// .todo__input--icon {
-//     width: 19px;
-//     height: 19px;
-//     position: relative;
-//     left: -32.7%;
-//     top: 23.3%;
-// }
-
 .todo__list {
-    width: 50%;
+    width: 100%;
     list-style: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
 }
 
 .todo__item {
-    padding: 30px 10px;
+    padding: 20px 10px;
     background-color: #FEFEFE;
     box-shadow: 0 3px 10px #BCBCBC;
     color: #4D4D4D;
-    border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid #ededed;
 }
 
 .todo__item--wrapper {
@@ -66,6 +67,8 @@
 }
 
 .todo__item--text {
+    max-width: 85%;
+    word-break: break-all;
     margin-right: auto;
     margin-left: 20px;
 }
@@ -96,4 +99,34 @@
 .completed-tasks {
     color: #E6E6E6;
     text-decoration: line-through;
+}
+
+.todo__result {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #FEFEFE;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgba(0, 0, 0, 0.2), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgba(0, 0, 0, 0.2);
+}
+
+.todo__result--wrapper {
+    display: flex;
+    margin: 0 auto;
+    align-items: center;
+    list-style: none;
+}
+
+.todo__count,
+.todo__result--wrapper li,
+.todo__result--wrapper span {
+    color: #777777;
+    font-size: 17px;
+    padding: 0 15px;
+    cursor: default;
+}
+
+.todo__result--wrapper span {
+    font-weight: 900;
+    padding: 0;
 }
