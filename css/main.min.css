@@ -21,7 +21,6 @@ body {
 
 .current {
   box-shadow: 0 0 0 1px #EFD5D5;
-  padding: 7px;
   border-radius: 5px;
 }
 
@@ -151,14 +150,25 @@ body {
 }
 
 .todo__count,
+.todo__count-text,
 .todo__result--wrapper li,
 .todo__result--wrapper span {
   color: #777777;
   font-size: 17px;
-  padding: 0 15px;
+  padding: 0 10px;
   cursor: default;
 }
 
+.todo__result--wrapper li {
+  margin: 0 10px;
+}
+
+.todo__result--wrapper li:hover {
+  box-shadow: 0 0 0 1px rgba(239, 213, 213, 0.6274509804);
+  border-radius: 5px;
+}
+
+.todo__count-text,
 .todo__result--wrapper span {
   font-weight: 900;
   padding: 0;

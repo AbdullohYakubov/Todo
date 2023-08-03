@@ -9,8 +9,20 @@ const elTodoCompleted = getElement(".todo__completed-text", elTodoCounter);
 
 const todoArr = [];
 
+const numerateTodos = (array) => {
+  elTodoAll.textContent = array.length;
+
+  const activeTodosCount = todoArr.filter((todo) => !todo.isCompleted);
+  elTodoActive.textContent = activeTodosCount.length;
+
+  const completedTodosCount = todoArr.filter((todo) => todo.isCompleted);
+  elTodoCompleted.textContent = completedTodosCount.length;
+};
+
 const renderTodos = (array, node) => {
   node.innerHTML = null;
+
+  numerateTodos(array);
 
   const templateFragment = document.createDocumentFragment();
 
@@ -102,17 +114,26 @@ elTodoList.addEventListener("click", handleTodoList);
 
 const handleTodoCounter = (evt) => {
   if (evt.target.matches(".todo__all")) {
+    getElement(".todo__all").classList.add("current");
+    getElement(".todo__active").classList.remove("current");
+    getElement(".todo__completed").classList.remove("current");
     renderTodos(todoArr, elTodoList);
   }
 
-  if (evt.target.matches(".todo__completed")) {
-    const completedTodos = todoArr.filter((todo) => todo.isCompleted);
-    renderTodos(completedTodos, elTodoList);
-  }
-
   if (evt.target.matches(".todo__active")) {
+    getElement(".todo__active").classList.add("current");
+    getElement(".todo__all").classList.remove("current");
+    getElement(".todo__completed").classList.remove("current");
     const activeTodos = todoArr.filter((todo) => !todo.isCompleted);
     renderTodos(activeTodos, elTodoList);
+  }
+
+  if (evt.target.matches(".todo__completed")) {
+    getElement(".todo__completed").classList.add("current");
+    getElement(".todo__all").classList.remove("current");
+    getElement(".todo__active").classList.remove("current");
+    const completedTodos = todoArr.filter((todo) => todo.isCompleted);
+    renderTodos(completedTodos, elTodoList);
   }
 };
 
