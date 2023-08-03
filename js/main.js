@@ -15,8 +15,7 @@ const numerateTodos = (array) => {
   const activeTodosCount = todoArr.filter((todo) => !todo.isCompleted);
   elTodoActive.textContent = activeTodosCount.length;
 
-  const completedTodosCount = todoArr.filter((todo) => todo.isCompleted);
-  elTodoCompleted.textContent = completedTodosCount.length;
+  elTodoCompleted.textContent = todoArr.length - activeTodosCount.length;
 };
 
 const renderTodos = (array, node) => {
@@ -70,9 +69,6 @@ const handleTodoForm = (evt) => {
 
   renderTodos(todoArr, elTodoList);
 
-  //   getElement(".todo__all").textContent = todoArr.length;
-  //   getElement(".todo__active").textContent = todoArr.length;
-
   elTodoInput.value = null;
 };
 
@@ -84,8 +80,6 @@ const handleDeleteTodo = (id, array) => {
   array.splice(foundTodoIndex, 1);
 
   renderTodos(todoArr, elTodoList);
-
-  //   getElement(".todo__all").textContent = todoArr.length;
 };
 
 const handleCheckTodo = (id, array) => {
