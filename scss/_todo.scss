@@ -28,20 +28,20 @@
     box-shadow: 0 3px 10px #BCBCBC;
 }
 
-.todo__input--icon {
-    width: 19px;
-    height: 19px;
-    position: relative;
-    left: -32.7%;
-    top: 23.3%;
-}
-
 .todo__input::placeholder {
     font-style: italic;
     color: #E6E6E6;
     font-size: 25px;
     user-select: none;
 }
+
+// .todo__input--icon {
+//     width: 19px;
+//     height: 19px;
+//     position: relative;
+//     left: -32.7%;
+//     top: 23.3%;
+// }
 
 .todo__list {
     width: 50%;
@@ -72,25 +72,28 @@
 
 .todo__item--btn {
     display: none;
+    position: relative;
     background-color: inherit;
     border: none;
     margin-right: 10px;
 }
 
-.todo__item--btn:hover svg g {
-    fill: #AF5B5E;
+.todo__item--btn::after {
+    content: url(../img/cross.svg);
+    position: absolute;
+    right: 0;
+    bottom: -17px;
 }
 
 .todo__item:hover .todo__item--btn {
     display: flex;
-    // cursor: pointer;
 }
+
+// .todo__item--btn:hover {
+//     background-color: #AF5B5E;
+// }
 
 .completed-tasks {
     color: #E6E6E6;
     text-decoration: line-through;
-}
-
-.crossed-out-tasks {
-    display: none;
 }

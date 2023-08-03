@@ -1,43 +1,88 @@
-const elTodoForm = document.querySelector(".todo__form");
-const elTodoInput = elTodoForm.querySelector(".todo__input");
-const elTodoList = document.querySelector(".todo__list");
+const elTodoForm = getElement(".todo__form");
+const elTodoInput = getElement(".todo__input", elTodoForm);
+const elTodoList = getElement(".todo__list");
+const elTodoTemplate = getElement("#todo__item--template").content;
 
-const elListTemplate = document.querySelector(".todo__item--template").content;
+const todoArr = [];
 
-const todo = [];
+const renderTodos = (array, node) => {
+  node.innerHTML = null;
 
-const renderTodos = (todoArr, element) => {
-  todoArr.forEach((item) => {
-    const listTemplate = elListTemplate.cloneNode(true);
+  const templateFragment = document.createDocumentFragment();
 
-    listTemplate.querySelector(".todo__item--text").textContent = item;
+  array.forEach((todo) => {
+    const todoTemplate = elTodoTemplate.cloneNode(true);
 
-    element.appendChild(listTemplate);
+    const elTodoTitle = getElement(".todo__item--text", todoTemplate);
+    const elTodoCheckbox = getElement("#checkbox", todoTemplate);
+    const elTodoDelete = getElement(".todo__item--btn", todoTemplate);
 
-    crossOutCompletedTaks();
+    elTodoTitle.textContent = todo.title;
+    elTodoCheckbox.dataset.todoId = todo.id;
+    elTodoDelete.dataset.todoId = todo.id;
+
+    if (todo.isCompleted) {
+      elTodoCheckbox.checked = true;
+      elTodoTitle.classList.add("completed-tasks");
+    } else {
+      elTodoCheckbox.checked = false;
+      elTodoTitle.classList.remove("completed-tasks");
+    }
+
+    templateFragment.appendChild(todoTemplate);
   });
+
+  node.appendChild(templateFragment);
 };
 
-const crossOutCompletedTaks = () => {
-  const elCheckbox = document.querySelector("#checkbox");
-  const elTodo = document.querySelector(".todo__item--text");
-  if (elCheckbox.checked) {
-    elTodo.classList.add("completed-tasks");
-  } else {
-    elTodo.classList.remove("completed-tasks");
-  }
-};
-
-const handleTodoFormSubmit = (evt) => {
+const handleTodoForm = (evt) => {
   evt.preventDefault();
-  elTodoList.innerHTML = null;
 
-  const userInputValue = elTodoInput.value.trim();
-  todo.push(userInputValue);
+  const todoInputValue = elTodoInput.value.trim();
 
-  renderTodos(todo, elTodoList);
+  const newTodo = {
+    id: todoArr[todoArr.length - 1]?.id + 1 || 0,
+    title: todoInputValue,
+    isCompleted: false,
+  };
+
+  todoArr.push(newTodo);
+
+  renderTodos(todoArr, elTodoList);
 
   elTodoInput.value = null;
 };
 
-elTodoForm.addEventListener("submit", handleTodoFormSubmit);
+elTodoForm.addEventListener("submit", handleTodoForm);
+
+const handleDeleteTodo = (id, array) => {
+  const foundTodoIndex = array.findIndex((todo) => todo.id === id);
+
+  array.splice(foundTodoIndex, 1);
+};
+
+const handleCheckTodo = (id, array) => {
+  const foundTodo = array.find((todo) => todo.id === id);
+
+  foundTodo.isCompleted = !foundTodo.isCompleted;
+};
+
+const handleTodoList = (evt) => {
+  if (evt.target.matches(".todo__item--btn")) {
+    const clickedTodoId = Number(evt.target.dataset.todoId);
+
+    handleDeleteTodo(clickedTodoId, todoArr);
+
+    renderTodos(todoArr, elTodoList);
+  }
+
+  if (evt.target.matches("#checkbox")) {
+    const checkedTodoId = Number(evt.target.dataset.todoId);
+
+    handleCheckTodo(checkedTodoId, todoArr);
+
+    renderTodos(todoArr, elTodoList);
+  }
+};
+
+elTodoList.addEventListener("click", handleTodoList);
