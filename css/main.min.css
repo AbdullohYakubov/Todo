@@ -10,6 +10,14 @@
   color: #4D4D4D;
 }
 
+::-moz-selection {
+  background-color: #eae7e7;
+}
+
+::selection {
+  background-color: #eae7e7;
+}
+
 body {
   background-color: #F3F3F3;
 }
@@ -20,7 +28,7 @@ body {
 }
 
 .current {
-  box-shadow: 0 0 0 1px #EFD5D5;
+  box-shadow: 0 0 0 1px #EFD5D5 !important;
   border-radius: 5px;
 }
 
@@ -135,7 +143,7 @@ body {
 
 .todo__result {
   width: 100%;
-  display: flex;
+  display: none;
   align-items: center;
   padding: 10px;
   background-color: #FEFEFE;
@@ -155,7 +163,7 @@ body {
 .todo__result--wrapper span {
   color: #777777;
   font-size: 17px;
-  padding: 0 10px;
+  padding: 3px 7px;
   cursor: default;
 }
 

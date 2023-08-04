@@ -1,14 +1,17 @@
+// Getting Elements
 const elTodoForm = getElement(".todo__form");
 const elTodoInput = getElement(".todo__input", elTodoForm);
 const elTodoList = getElement(".todo__list");
 const elTodoTemplate = getElement("#todo__item--template").content;
 const elTodoCounter = getElement(".todo__result--wrapper");
-const elTodoAll = getElement(".todo__all-text", elTodoCounter);
+const elTodoAll = getElement(".todo__count-text");
 const elTodoActive = getElement(".todo__active-text", elTodoCounter);
 const elTodoCompleted = getElement(".todo__completed-text", elTodoCounter);
 
+// Creating an empty array to push todos
 const todoArr = [];
 
+// Creating a function that counts the number of todos by categories
 const numerateTodos = (array) => {
   elTodoAll.textContent = array.length;
 
@@ -18,11 +21,14 @@ const numerateTodos = (array) => {
   elTodoCompleted.textContent = todoArr.length - activeTodosCount.length;
 };
 
+// Rendering todos to DOMs
 const renderTodos = (array, node) => {
   node.innerHTML = null;
 
+  // Activating the numerate function on every render
   numerateTodos(array);
 
+  // Creating an empty fragment to append Todoss
   const templateFragment = document.createDocumentFragment();
 
   array.forEach((todo) => {
@@ -32,10 +38,12 @@ const renderTodos = (array, node) => {
     const elTodoCheckbox = getElement("#checkbox", todoTemplate);
     const elTodoDelete = getElement(".todo__item--btn", todoTemplate);
 
+    // Assigning the necessary values to elements
     elTodoTitle.textContent = todo.title;
     elTodoCheckbox.dataset.todoId = todo.id;
     elTodoDelete.dataset.todoId = todo.id;
 
+    // This is what happens when the checkbox becomes checked. See line 99.
     if (todo.isCompleted) {
       elTodoCheckbox.checked = true;
       elTodoTitle.classList.add("completed-tasks");
@@ -44,21 +52,26 @@ const renderTodos = (array, node) => {
       elTodoTitle.classList.remove("completed-tasks");
     }
 
+    // Appending the todos to the fragment
     templateFragment.appendChild(todoTemplate);
   });
 
+  // Finally, appending the fragment to DOM element, which is "ul"
   node.appendChild(templateFragment);
 };
 
+// This is what happens when the user enters a new todo
 const handleTodoForm = (evt) => {
   evt.preventDefault();
 
   const todoInputValue = elTodoInput.value.trim();
 
+  // Early return if the todo is invalid
   if (!todoInputValue) {
     return;
   }
 
+  // Creating a todo object
   const newTodo = {
     id: todoArr[todoArr.length - 1]?.id + 1 || 0,
     title: todoInputValue,
@@ -67,6 +80,11 @@ const handleTodoForm = (evt) => {
 
   todoArr.push(newTodo);
 
+  if (todoArr.length > 0) {
+    const elTodoCount = getElement(".todo__result");
+    elTodoCount.style.display = "flex";
+  }
+
   renderTodos(todoArr, elTodoList);
 
   elTodoInput.value = null;
@@ -74,6 +92,7 @@ const handleTodoForm = (evt) => {
 
 elTodoForm.addEventListener("submit", handleTodoForm);
 
+// Function to find the objects (todos) whose delete button is clicked and to remove those objects (todos)
 const handleDeleteTodo = (id, array) => {
   const foundTodoIndex = array.findIndex((todo) => todo.id === id);
 
@@ -82,6 +101,7 @@ const handleDeleteTodo = (id, array) => {
   renderTodos(todoArr, elTodoList);
 };
 
+// Function to find the objects (todos) whose checkbox is checked and to perform specific operations on them (e.g. adding a class, etc.)
 const handleCheckTodo = (id, array) => {
   const foundTodo = array.find((todo) => todo.id === id);
 
@@ -90,6 +110,7 @@ const handleCheckTodo = (id, array) => {
   renderTodos(todoArr, elTodoList);
 };
 
+// Function to listen to the list of todos and get the IDs of the todos whose either delete button is clicked or checkbox is checked.
 const handleTodoList = (evt) => {
   if (evt.target.matches(".todo__item--btn")) {
     const clickedTodoId = Number(evt.target.dataset.todoId);
@@ -106,6 +127,7 @@ const handleTodoList = (evt) => {
 
 elTodoList.addEventListener("click", handleTodoList);
 
+// Function that listens to the buttons that serve to count the todos by categories.
 const handleTodoCounter = (evt) => {
   if (evt.target.matches(".todo__all")) {
     getElement(".todo__all").classList.add("current");

@@ -12,6 +12,10 @@
     color: #4D4D4D;
 }
 
+::selection {
+    background-color: #eae7e7;
+}
+
 body {
     background-color: #F3F3F3;
 }
@@ -22,7 +26,7 @@ body {
 }
 
 .current {
-    box-shadow: 0 0 0 1px #EFD5D5;
+    box-shadow: 0 0 0 1px #EFD5D5 !important;
     border-radius: 5px
 }
 
