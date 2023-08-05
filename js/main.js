@@ -3,13 +3,13 @@ const elTodoForm = getElement(".todo__form");
 const elTodoInput = getElement(".todo__input", elTodoForm);
 const elTodoList = getElement(".todo__list");
 const elTodoTemplate = getElement("#todo__item--template").content;
-const elTodoCounter = getElement(".todo__result--wrapper");
-const elTodoAll = getElement(".todo__count-text");
+const elTodoCounter = getElement(".todo__result");
+const elTodoAll = getElement(".todo__count-text", elTodoCounter);
 const elTodoActive = getElement(".todo__active-text", elTodoCounter);
 const elTodoCompleted = getElement(".todo__completed-text", elTodoCounter);
 
 // Creating an empty array to push todos
-const todoArr = [];
+let todoArr = JSON.parse(window.localStorage.getItem("todoArr")) || [];
 
 // Creating a function that counts the number of todos by categories
 const numerateTodos = (array) => {
@@ -60,6 +60,20 @@ const renderTodos = (array, node) => {
   node.appendChild(templateFragment);
 };
 
+renderTodos(todoArr, elTodoList);
+
+const makeTodoCountVisible = (array) => {
+  if (array.length > 0) {
+    const elTodoCount = getElement(".todo__result");
+    elTodoCount.style.display = "flex";
+  } else {
+    const elTodoCount = getElement(".todo__result");
+    elTodoCount.style.display = "none";
+  }
+};
+
+makeTodoCountVisible(todoArr);
+
 // This is what happens when the user enters a new todo
 const handleTodoForm = (evt) => {
   evt.preventDefault();
@@ -80,12 +94,11 @@ const handleTodoForm = (evt) => {
 
   todoArr.push(newTodo);
 
-  if (todoArr.length > 0) {
-    const elTodoCount = getElement(".todo__result");
-    elTodoCount.style.display = "flex";
-  }
+  makeTodoCountVisible(todoArr);
 
   renderTodos(todoArr, elTodoList);
+
+  window.localStorage.setItem("todoArr", JSON.stringify(todoArr));
 
   elTodoInput.value = null;
 };
@@ -99,6 +112,10 @@ const handleDeleteTodo = (id, array) => {
   array.splice(foundTodoIndex, 1);
 
   renderTodos(todoArr, elTodoList);
+
+  makeTodoCountVisible(todoArr);
+
+  window.localStorage.setItem("todoArr", JSON.stringify(todoArr));
 };
 
 // Function to find the objects (todos) whose checkbox is checked and to perform specific operations on them (e.g. adding a class, etc.)
@@ -108,6 +125,8 @@ const handleCheckTodo = (id, array) => {
   foundTodo.isCompleted = !foundTodo.isCompleted;
 
   renderTodos(todoArr, elTodoList);
+
+  window.localStorage.setItem("todoArr", JSON.stringify(todoArr));
 };
 
 // Function to listen to the list of todos and get the IDs of the todos whose either delete button is clicked or checkbox is checked.
@@ -150,6 +169,16 @@ const handleTodoCounter = (evt) => {
     getElement(".todo__active").classList.remove("current");
     const completedTodos = todoArr.filter((todo) => todo.isCompleted);
     renderTodos(completedTodos, elTodoList);
+  }
+
+  if (evt.target.matches(".clear-completed")) {
+    window.localStorage.removeItem("todoArr");
+
+    todoArr = [];
+
+    renderTodos(todoArr, elTodoList);
+
+    makeTodoCountVisible(todoArr);
   }
 };
 

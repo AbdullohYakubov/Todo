@@ -103,7 +103,6 @@
 
 .todo__result {
     width: 100%;
-    display: none;
     align-items: center;
     padding: 10px;
     background-color: #FEFEFE;
@@ -120,10 +119,16 @@
 .todo__count,
 .todo__count-text,
 .todo__result--wrapper li,
-.todo__result--wrapper span {
+.todo__result--wrapper span,
+.clear-completed {
     color: #777777;
-    font-size: 17px;
+    font-size: 15px;
+    font-weight: 500;
     padding: 3px 7px;
+    cursor: pointer;
+}
+
+.todo__count {
     cursor: default;
 }
 
@@ -140,4 +145,8 @@
 .todo__result--wrapper span {
     font-weight: 900;
     padding: 0;
+}
+
+.clear-completed:hover {
+    text-decoration: underline;
 }
