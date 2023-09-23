@@ -21,6 +21,37 @@ const numerateTodos = (array) => {
   elTodoCompleted.textContent = todoArr.length - activeTodosCount.length;
 };
 
+// A function that makes a content editable when double-clicked
+
+// const addContentEditable = (evt) => {
+//   const selectedTodo = Number(evt.target.dataset.todoId);
+//   if ((evt.target.dataset.todoId = selectedTodo)) {
+//     evt.target.contentEditable = true;
+//     evt.target.style.padding = "15px";
+//     evt.target.style.marginLeft = "45px";
+
+//     evt.target.focus();
+
+//     evt.target.previousElementSibling.style.display = "none";
+//     evt.target.nextElementSibling.style.display = "none";
+
+//     document.addEventListener("click", removeContentEditable);
+//   }
+// };
+
+// const removeContentEditable = (evt) => {
+//   if (evt.target.matches(".todo") || evt.target.matches(".todo__item--text")) {
+//     const editableText = getElement(".todo__item--text");
+//     if (editableText.contentEditable) {
+//       editableText.contentEditable = false;
+//       editableText.blur();
+//       // editableText.previousElementSibling.style.display = "flex";
+//       // editableText.nextElementSibling.style.display = "flex";
+//       console.log("worked");
+//     }
+//   }
+// };
+
 // Rendering todos to DOMs
 const renderTodos = (array, node) => {
   node.innerHTML = null;
@@ -40,10 +71,11 @@ const renderTodos = (array, node) => {
 
     // Assigning the necessary values to elements
     elTodoTitle.textContent = todo.title;
+    elTodoTitle.dataset.todoId = todo.id;
     elTodoCheckbox.dataset.todoId = todo.id;
     elTodoDelete.dataset.todoId = todo.id;
 
-    // This is what happens when the checkbox becomes checked. See line 99.
+    // This is what happens when the checkbox is checked. See line 99.
     if (todo.isCompleted) {
       elTodoCheckbox.checked = true;
       elTodoTitle.classList.add("completed-tasks");
@@ -51,6 +83,9 @@ const renderTodos = (array, node) => {
       elTodoCheckbox.checked = false;
       elTodoTitle.classList.remove("completed-tasks");
     }
+
+    // elTodoList.addEventListener("dblclick", addContentEditable);
+    // document.addEventListener("click", removeContentEditable);
 
     // Appending the todos to the fragment
     templateFragment.appendChild(todoTemplate);

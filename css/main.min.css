@@ -94,42 +94,26 @@ body {
 }
 
 .todo__item {
-  padding: 20px 10px;
+  position: relative;
   background-color: #FEFEFE;
   box-shadow: 0 3px 10px #BCBCBC;
   color: #4D4D4D;
   border-bottom: 1px solid #ededed;
 }
 
-.todo__item--wrapper {
-  width: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #FEFEFE;
-}
-
 .todo__item--text {
-  max-width: 85%;
   word-break: break-all;
-  margin-right: auto;
-  margin-left: 20px;
+  padding: 15px 15px 15px 60px;
 }
 
 .todo__item--btn {
-  display: none;
-  position: relative;
+  display: flex;
+  padding: 15px;
+  position: absolute;
+  top: calc(50% - 23.5px);
+  right: 0;
   background-color: inherit;
   border: none;
-  margin-right: 10px;
-}
-
-.todo__item--btn::after {
-  content: url(../img/cross.svg);
-  position: absolute;
-  right: 0;
-  bottom: -17px;
 }
 
 .todo__item:hover .todo__item--btn {
@@ -189,6 +173,12 @@ body {
 
 .clear-completed:hover {
   text-decoration: underline;
+}
+
+.checkbox__wrapper {
+  position: absolute;
+  top: calc(50% - 14px);
+  left: 10px;
 }
 
 .custom-checkbox {
